@@ -8,7 +8,6 @@ public interface Matrix {
      * @return element
      */
     public int getElement(int y, int x);
-
     /**
      * Returns the number of rows in the matrix.
      * @return rows
