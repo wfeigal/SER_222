@@ -3,7 +3,7 @@ package Week2_Unit2;
 public class MyMatrix implements Matrix{
 
 	//VARIABLES AND DECLARATIONS
-	int[][] matrix;
+	private int[][] matrix;
 	
 	//CONSTRUCTOR
     public MyMatrix(int[][] matrix) {
