@@ -21,7 +21,7 @@ public class MyMatrix implements Matrix{
     	
     	for (int i = 0; i < matrix.length; i++) {
     		for (int j = 0; j < matrix[0].length; j++) {	 
-    			temp[i][j] = matrix[i][j];
+    			temp[i][j] =  matrix[i][j];
     		}
     	}
     	this.matrix = temp;
