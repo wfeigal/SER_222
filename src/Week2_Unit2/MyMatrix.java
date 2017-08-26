@@ -1,24 +1,52 @@
 package Week2_Unit2;
 
+
 public class MyMatrix implements Matrix{
 
 	//VARIABLES AND DECLARATIONS
-	int[][] matrix;
+	private final int[][] matrix;
 	
 	//CONSTRUCTOR
     public MyMatrix(int[][] matrix) {
-    	this.matrix = matrix;
+    	int col = matrix.length;
+    	int row;
+    	try {
+    		row = matrix[0].length;
+    	}
+    	catch (ArrayIndexOutOfBoundsException e) {
+    		row = 0;
+    	}
+    	
+    	int[][] temp = new int[col][row];
+    	
+    	for (int i = 0; i < matrix.length; i++) {
+    		for (int j = 0; j < matrix[0].length; j++) {	 
+    			temp[i][j] = matrix[i][j];
+    		}
+    	}
+    	this.matrix = temp;
     }
     public int getElement(int y, int x) {
-    	return matrix[x][y];
+    	try {
+    		return matrix[x][y];
+    	}
+    	catch(ArrayIndexOutOfBoundsException e)	{
+    		System.out.println("Invalid index.");
+    		return -1;
+    	}
     }
     public int getRows() {
-    	int r= this.matrix.length;
+    	int r= matrix.length;
     	return r;
     }
     public int getColumns() {
-    	int c = this.matrix[0].length;
-    	return c;
+    	try {
+	    	int c = matrix[0].length;
+	    	return c;
+    	}
+    	catch(ArrayIndexOutOfBoundsException e)	{
+    			return 0;
+    	}
     }
     public MyMatrix scale(int scalar) {
     	//VARIABLES AND DECLARATIONS
@@ -30,15 +58,15 @@ public class MyMatrix implements Matrix{
     	int[][] newData = new int[row][col];
     	MyMatrix newMatrix = new MyMatrix(newData);
     	//ITERATE THROUGH EACH ARRAY ELEMENT, SCALE THAT VALUE, AND PUT IT INTO THE SAME SPOT IN THE NEW ARRAY
-    	for (int i = 0; i < this.matrix.length; i++) {
-    		for (int j = 0; i < this.matrix[0].length; j++) {	 
-    			newMatrix.matrix[i][j] = this.matrix[i][j]*scalar;
+    	for (int i = 0; i < matrix.length; i++) {
+    		for (int j = 0; j < matrix[0].length; j++) {	 
+    			newMatrix.matrix[i][j] = matrix[i][j]*scalar;
     		}
     	}
     	//RETURN THE NEW SCALED ARRAY
     	return newMatrix;	
     }
-    public Matrix plus(Matrix other) {
+    public MyMatrix plus(Matrix other) {
     	//CHECK TO SEE IF THE MATRICES ARE THE SAME DIMENSIONS
     	if ((this.getRows() != other.getRows()) || (this.getColumns() !=other.getColumns())){
     		throw new RuntimeException();
@@ -52,14 +80,14 @@ public class MyMatrix implements Matrix{
     	int[][] newData = new int[row][col];
     	MyMatrix newMatrix = new MyMatrix(newData);
     	//ITERATE THROUGH EACH ELEMENT OF THE ARRAY AND ADD THE CORRESPONDING ELEMENTS TOGETHER, STORING THEM IN THE NEW MATRIX
-    	for (int i = 0; i < this.matrix.length; i++) {
-    		for (int j = 0; i < this.matrix[0].length; j++) {	 
-    			newMatrix.matrix[i][j] = this.matrix[i][j] + other.getElement(i, j);
+    	for (int i = 0; i < matrix.length; i++) {
+    		for (int j = 0; j < matrix[0].length; j++) {	 
+    			newMatrix.matrix[i][j] = matrix[i][j] + other.getElement(i, j);
     		}
     	}		
     	return newMatrix;
     }
-    public Matrix minus(Matrix other) {
+    public MyMatrix minus(Matrix other) {
     	//CHECK TO SEE IF THE MATRICES ARE THE SAME DIMENSIONS
     	if ((this.getRows() != other.getRows()) || (this.getColumns() !=other.getColumns())){
     		throw new RuntimeException();
@@ -72,10 +100,10 @@ public class MyMatrix implements Matrix{
     	//SET UP OUR NEW OUTPUT MATRIX
     	int[][] newData = new int[row][col];
     	MyMatrix newMatrix = new MyMatrix(newData);
-    	//ITERATE THROUGH EACH ELEMENT OF THE ARRAY AND ADD THE CORRESPONDING ELEMENTS TOGETHER, STORING THEM IN THE NEW MATRIX
-    	for (int i = 0; i < this.matrix.length; i++) {
-    		for (int j = 0; i < this.matrix[0].length; j++) {	 
-    			newMatrix.matrix[i][j] = this.matrix[i][j] - other.getElement(i,j);
+    	//ITERATE THROUGH EACH ELEMENT OF THE ARRAY AND SUBTRACT THE CORRESPONDING ELEMENTS TOGETHER, STORING THEM IN THE NEW MATRIX
+    	for (int i = 0; i < matrix.length; i++) {
+    		for (int j = 0; j < matrix[0].length; j++) {	 
+    			newMatrix.matrix[i][j] = matrix[i][j] - other.getElement(i,j);
     		}
     	}		
     	return newMatrix;
@@ -86,9 +114,9 @@ public class MyMatrix implements Matrix{
     	if ((this.getRows() != other.getRows()) || (this.getColumns() !=other.getColumns())){
     		throw new RuntimeException();
     	}
-    	for (int i = 0; i < this.matrix.length; i++) {
-    		for (int j = 0; i < this.matrix[0].length; j++) {	 
-    			if (this.matrix[i][j] != other.matrix[i][j]) {
+    	for (int i = 0; i < matrix.length; i++) {
+    		for (int j = 0; j < matrix[0].length; j++) {	 
+    			if (matrix[i][j] != other.matrix[i][j]) {
     				return false;
     			}
     		}
@@ -101,8 +129,8 @@ public class MyMatrix implements Matrix{
     public String toString() {
     	String str;
     	str = "";
-    	for (int i = 0; i < this.matrix.length; i++) {
-    		for (int j = 0; i < this.matrix[0].length; j++) {	 
+    	for (int i = 0; i < this.getColumns(); i++) {
+    		for (int j = 0; j < this.getRows(); j++) {	 
     				str = str + this.matrix[i][j] + " ";
     		}
     		str = str + "\n";
