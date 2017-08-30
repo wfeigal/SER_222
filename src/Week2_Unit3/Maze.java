@@ -19,6 +19,7 @@ public class Maze
 
     private int numberRows, numberColumns;
     private int[][] grid;
+    private Deque<Position> path = new LinkedList<Position>();
 
     /**
      * Constructor for the Maze class. Loads a maze from the given file.  
@@ -76,9 +77,10 @@ public class Maze
      * @param row the index of the row to mark as part of the PATH
      * @param col the index of the column to mark as part of the PATH 
      */
-    public void markPath(int row, int col)
+    public void markPath(Position mrk)
     {
-        grid[row][col] = PATH;
+        
+        path.push(mrk);
     }
 
     /**
@@ -111,14 +113,12 @@ public class Maze
     public String printPath()
     {
         String result = "\n";
-
-        for (int row=0; row < grid.length; row++)
-        {
-            for (int column=0; column < grid[row].length; column++)
-            	if (grid[row][column] == 2) {
-            		result += row + "," + column + "\n";
-            	}
-        }
+        Position step;
+		while (!path.isEmpty())
+		{
+			step = path.removeLast();
+			result += + step.getx() + "," + step.gety() + "\n";
+		}
         return result;
     }
 

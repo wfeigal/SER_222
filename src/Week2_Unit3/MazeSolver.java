@@ -35,7 +35,6 @@ public class MazeSolver
     public boolean traverse()
     {
         boolean done = false;
-        int row, column;
         String start, end; 
         String[] st, en;
         Scanner scan = new Scanner(System.in);
@@ -47,6 +46,8 @@ public class MazeSolver
         int startx = Integer.parseInt(st[0]);
         int starty = Integer.parseInt(st[1]);
         Position startPos = new Position();
+        
+        //VALIDATE USER INPUT 
         try {
         	if(maze.validPosition(startx, starty)) {
             	startPos.setx(startx);
@@ -57,7 +58,7 @@ public class MazeSolver
         	}
         }
         catch (NumberFormatException e) {
-    		System.out.println("Invalid Input! \nDefault start point used...");
+    		System.out.println("\nInvalid Start-Point Input! Syntax error or point is not valid...\n\nDefault start point used...\n");
         	startPos.setx(0);
         	startPos.sety(0);
         }
@@ -65,9 +66,9 @@ public class MazeSolver
         //GET ENDING POSITION FROM THE USER
         System.out.println("Enter the ending position (two integers seperated by a comma):");
         end = scan.nextLine();
-        en = start.split(",");
-        int endx = Integer.parseInt(st[0]);
-        int endy = Integer.parseInt(st[1]);
+        en = end.split(",");
+        int endx = Integer.parseInt(en[0]);
+        int endy = Integer.parseInt(en[1]);
         Position endPos = new Position();
         try {
         	if(maze.validPosition(endx, endy)) {
@@ -80,26 +81,28 @@ public class MazeSolver
         	}
         }
         catch (NumberFormatException e) {
-    		System.out.println("Invalid Input! \nDefault end point used...");
+    		System.out.println("\\nInvalid End-Point Input! Syntax error or point is not valid...\\n\\nDefault end point used...\n");
         	endPos.setx(0);
         	endPos.sety(0);
         }
         
         
-        System.out.println("Start position is: x:" + startx + " y:" + starty);
-        System.out.println("End position is: x:" + endx + " y:" + endy);
+        System.out.println("\nStart position is: x:" + startPos.getx() + " y:" + startPos.gety() + "\n");
+        System.out.println("\nEnd position is: x:" + endPos.getx() + " y:" + endPos.gety() + "\n");
         
         
         
         Deque<Position> stack = new LinkedList<Position>();
-		stack.push(startPos);
         
+		stack.push(startPos);
+		
         Position pos = new Position();
         while (!(done) && !stack.isEmpty())
         {
             pos = stack.pop();
-            maze.tryPosition(pos.getx(),pos.gety());  // this cell has been tried
-            if (pos.getx() == maze.getRows()-1 && pos.gety() == maze.getColumns()-1)
+            maze.tryPosition(pos.getx(),pos.gety());// this cell has been tried
+            maze.markPath(pos);
+            if (pos.getx() == endPos.getx() && pos.gety() == endPos.gety())
                 done = true;  // the maze is solved
             else
             {
@@ -109,6 +112,7 @@ public class MazeSolver
                 push_new_pos(pos.getx(),pos.gety() + 1, stack); 
             }
         }
+        
         
         return done;
     }
