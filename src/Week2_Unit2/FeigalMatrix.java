@@ -1,7 +1,7 @@
 package Week2_Unit2;
 
 
-public class MyMatrix implements Matrix{
+public class FeigalMatrix implements Matrix{
 
 	//VARIABLES AND DECLARATIONS
 
@@ -9,7 +9,7 @@ public class MyMatrix implements Matrix{
 
 	
 	//CONSTRUCTOR
-    public MyMatrix(int[][] matrix) {
+    public FeigalMatrix(int[][] matrix) {
     	int col = matrix.length;
     	int row;
     	try {
@@ -50,7 +50,7 @@ public class MyMatrix implements Matrix{
     			return 0;
     	}
     }
-    public MyMatrix scale(int scalar) {
+    public FeigalMatrix scale(int scalar) {
     	//VARIABLES AND DECLARATIONS
     	int row, col;
     	//GET THE SIZE OF THE MATRIX TO BE SCALED SO THE NEW MATRIX CAN BE SIZED CORRECTLY
@@ -58,7 +58,7 @@ public class MyMatrix implements Matrix{
     	col = this.getColumns();
     	//SET UP OUR NEW OUTPUT MATRIX
     	int[][] newData = new int[row][col];
-    	MyMatrix newMatrix = new MyMatrix(newData);
+    	FeigalMatrix newMatrix = new FeigalMatrix(newData);
     	//ITERATE THROUGH EACH ARRAY ELEMENT, SCALE THAT VALUE, AND PUT IT INTO THE SAME SPOT IN THE NEW ARRAY
     	for (int i = 0; i < matrix.length; i++) {
     		for (int j = 0; j < matrix[0].length; j++) {	 
@@ -68,7 +68,7 @@ public class MyMatrix implements Matrix{
     	//RETURN THE NEW SCALED ARRAY
     	return newMatrix;	
     }
-    public MyMatrix plus(Matrix other) {
+    public FeigalMatrix plus(Matrix other) {
     	//CHECK TO SEE IF THE MATRICES ARE THE SAME DIMENSIONS
     	if ((this.getRows() != other.getRows()) || (this.getColumns() !=other.getColumns())){
     		throw new RuntimeException();
@@ -87,10 +87,10 @@ public class MyMatrix implements Matrix{
     			newData[i][j] = matrix[i][j] + other.getElement(j, i);
     		}
     	}		
-    	MyMatrix newMatrix = new MyMatrix(newData);
+    	FeigalMatrix newMatrix = new FeigalMatrix(newData);
     	return newMatrix;
     }
-    public MyMatrix minus(Matrix other) {
+    public FeigalMatrix minus(Matrix other) {
     	//CHECK TO SEE IF THE MATRICES ARE THE SAME DIMENSIONS
     	if ((this.getRows() != other.getRows()) || (this.getColumns() !=other.getColumns())){
     		throw new RuntimeException();
@@ -110,11 +110,11 @@ public class MyMatrix implements Matrix{
     		}
     	}	
     	
-    	MyMatrix newMatrix = new MyMatrix(newData);
+    	FeigalMatrix newMatrix = new FeigalMatrix(newData);
     	return newMatrix;
     }
     
-    public boolean equals(MyMatrix other) {
+    public boolean equals(FeigalMatrix other) {
     	//CHECK TO SEE IF THE MATRICES ARE THE SAME DIMENSIONS
     	if ((this.getRows() != other.getRows()) || (this.getColumns() !=other.getColumns())){
     		throw new RuntimeException();
@@ -154,9 +154,9 @@ public class MyMatrix implements Matrix{
         int[][] data2 = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         int[][] data3 = {{1, 4, 7}, {2, 5, 8}, {3, 6, 9}};
         
-        Matrix m1 = new MyMatrix(data1);
-        Matrix m2 = new MyMatrix(data2);
-        Matrix m3 = new MyMatrix(data3);
+        Matrix m1 = new FeigalMatrix(data1);
+        Matrix m2 = new FeigalMatrix(data2);
+        Matrix m3 = new FeigalMatrix(data3);
         
         System.out.println("m1 --> Rows: " + m1.getRows() + " Columns: " + m1.getColumns());
         System.out.println("m2 --> Rows: " + m2.getRows() + " Columns: " + m2.getColumns());
