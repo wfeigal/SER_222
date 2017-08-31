@@ -57,7 +57,7 @@ public class MyMatrix implements Matrix{
     	row = this.getRows();
     	col = this.getColumns();
     	//SET UP OUR NEW OUTPUT MATRIX
-    	int[][] newData = new int[col][row];
+    	int[][] newData = new int[row][col];
     	MyMatrix newMatrix = new MyMatrix(newData);
     	//ITERATE THROUGH EACH ARRAY ELEMENT, SCALE THAT VALUE, AND PUT IT INTO THE SAME SPOT IN THE NEW ARRAY
     	for (int i = 0; i < matrix.length; i++) {
@@ -79,7 +79,7 @@ public class MyMatrix implements Matrix{
     	row = this.getRows();
     	col = this.getColumns();
     	//SET UP OUR NEW OUTPUT MATRIX
-    	int[][] newData = new int[col][row];
+    	int[][] newData = new int[row][col];
     	
     	//ITERATE THROUGH EACH ELEMENT OF THE ARRAY AND ADD THE CORRESPONDING ELEMENTS TOGETHER, STORING THEM IN THE NEW MATRIX
     	for (int i = 0; i < matrix.length; i++) {
@@ -101,7 +101,7 @@ public class MyMatrix implements Matrix{
     	row = this.getRows();
     	col = this.getColumns();
     	//SET UP OUR NEW OUTPUT MATRIX
-    	int[][] newData = new int[col][row];
+    	int[][] newData = new int[row][col];
     	
     	//ITERATE THROUGH EACH ELEMENT OF THE ARRAY AND SUBTRACT THE CORRESPONDING ELEMENTS TOGETHER, STORING THEM IN THE NEW MATRIX
     	for (int i = 0; i < matrix.length; i++) {
@@ -134,8 +134,8 @@ public class MyMatrix implements Matrix{
     public String toString() {
     	String str;
     	str = "";
-    	for (int i = 0; i < this.getColumns(); i++) {
-    		for (int j = 0; j < this.getRows(); j++) {	 
+    	for (int i = 0; i < this.getRows(); i++) {
+    		for (int j = 0; j < this.getColumns(); j++) {	 
     				str = str + this.matrix[i][j] + " ";
     		}
     		str = str + "\n";
