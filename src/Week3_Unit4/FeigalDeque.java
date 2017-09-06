@@ -43,7 +43,7 @@ public class FeigalDeque<Item> implements Deque<Item> {
 	public void enqueueBack(Item element) {
 		//Create new node with element passed in
 		LinearNode<Item> newEl = new LinearNode<Item>(element);
-		//INSERT IN FROM OF CURRENT TAIL
+		//INSERT IN FRONT OF CURRENT TAIL
 		if (tail!= null)
 			tail.setNext(newEl);
 		newEl.setPrev(tail);
