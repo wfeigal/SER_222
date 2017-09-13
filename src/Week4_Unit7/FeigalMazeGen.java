@@ -113,34 +113,39 @@ public class FeigalMazeGen
     private static void makeMazeRecursive(char[][]level, int startX, int startY, int endX, int endY)
     {
     		//CAPTURE CURRENT SIZE OF AREA
-    		int height = Math.abs(startY - endY);
-    		int width = Math.abs(startX - endX);
+    		int height = Math.abs(endY - startY);
+    		int width = Math.abs(endX - startX);
     		
     		//CHECK TO SEE IF SIZE OF AREA MEETS MINIMUM REQUIREMENTS
     		//BASE CASE = SEGMENT TOO SMALL TO ADD ANY MORE WALLS
-    		if (height < 4 || width < 4)
+    		if (height <= 3 && width <= 3 )
     			return;
     		  
     		//GENERATE PLACEMENT FOR WALLS
-    		int w1 = randBetween(startX,width); //vertical wall
-    		int w2 = randBetween(startY,height); //horizontal wall
+    		int w1 = randBetween(startX+1,endX-1); //vertical wall
+    		
+    		int w2 = randBetween(startY+1,endY-1); //horizontal wall
+    		
     		
     		//GENERATE PLACEMENT FOR PATHWAYS
-    		int p1 = randBetween(startY,w2-1);
-    		int p2 = randBetween(startX,w1-1);
-    		int p3 = randBetween(w2+1,endY);
-    		int p4 = randBetween(w1+1,endX);
+    		int p1 = randBetween(startY,w2-1);//north pathway
     		
+    		int p2 = randBetween(w1+1,endX);//east pathway
+    		
+    		int p3 = randBetween(w2+1,endY);//south pathway
+    		
+    		int p4 = randBetween(startX,w1-1);//west pathway
+    		    		
     		
     		//PLACE WALLS INTO 2D ARRAY
-    		for (int i = 0; i <= height+1; i++) {
+    		for (int i = startY; i <= endY; i++) {
     			level[i][w1] = ICON_WALL;
     		}
-    		for (int j = 0; j <= width+1; j++) {
+    		for (int j = startX; j <= endX; j++) {
     			level[w2][j] = ICON_WALL;
     		}
     		
-    		//MODIFY WALLS FOR PATHWAYS
+    		//MODIFY WALLS BY ADDING PATHWAYS
     		level[p1][w1] = ICON_BLANK;
     		level[w2][p2] = ICON_BLANK;
     		level[p3][w1] = ICON_BLANK;
@@ -150,19 +155,19 @@ public class FeigalMazeGen
     		//quadrant NW
     		if ((((w1-1)-startX) > 3) && (((w2-1) - startY) > 3))
     			makeMazeRecursive(level,startX,startY,(w1-1),(w2-1));
-    		//quadrant NE
-    		if (((w2-1)-(w1+1) > 3) && ((endY-startY > 3)))
-    			makeMazeRecursive(level,(w1+1),startY,(w2-1),endY);
+    		
+    		//quadrant NE    		
+    		if (((endX - (w1+1)) > 3) && ((((w2-1)-startY) > 3)))
+    			makeMazeRecursive(level,(w1+1),startY,endX,(w2-1));
+    		
     		//quadrant SE
-    		if (((endX - (w2+1)) > 3) && ((endY) - (w1+1) > 3))
-    		makeMazeRecursive(level,(w2+1),(w1+1),endX,endY);
-    		//quadrant SW
+    		if (((endX - (w1+1)) > 3) && ((endY - (w2+1)) > 3))
+    			makeMazeRecursive(level,(w1+1),(w2+1),endX,endY);
+    		
+    		//quadrant SW    		
     		if (((w1-1) - startX) > 3 && ((endY - (w2+1)) > 3))
-    		makeMazeRecursive(level,startX,(w2+1),(w1-1),endY);
-    		
-    		
-    		
-    		
+    			makeMazeRecursive(level,startX,(w2+1),(w1-1),endY);
+	
     }
     
     /**
@@ -191,7 +196,12 @@ public class FeigalMazeGen
         //show static maze (uncomment for sample output)
         //drawLevel(makeMazeStatic());
         //show recursive maze
-
+    	for (int i = 0 ; i < 100; i++) {
+    		makeMaze();
+    		System.out.println("Maze #" + i + " is done!");
+    	}
+    		
+    	
     	
         drawLevel(makeMaze());
         
