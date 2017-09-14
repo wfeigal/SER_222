@@ -200,9 +200,7 @@ public class FeigalMazeGen
     		makeMaze();
     		System.out.println("Maze #" + i + " is done!");
     	}
-    		
-    	
-    	
+
         drawLevel(makeMaze());
         
     }
