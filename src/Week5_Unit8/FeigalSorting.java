@@ -7,7 +7,7 @@ import java.util.Arrays;
  * 
  * @author (your name), Acuna, Sedgewick
  * @verison (version)
- */
+ */ 
 
 public class FeigalSorting {
      
@@ -24,11 +24,29 @@ public class FeigalSorting {
         show(a);
         
         //Q2
+        String[] c = {"B", "O", "R", "A", "T", "A", "L", "L", "R", "I", "T"};
+        quicksortmid(c);
+        assert isSorted(c); //requires assertions enabled.
+        show(c);
+        
+        //Q3
         String[] b = {"S", "O", "R", "T", "E", "X", "A", "M", "P", "L", "E"};
-        Sorting.mergeSort(b);
+        //Sorting.mergeSort(b);
         mergesort(b);
-        assert isSorted(b);
+        //assert isSorted(b);
         show(b);
+        
+        //Q4
+        String[] e = {"S"};
+        mergesort(e);
+        assert isSorted(e);
+        show(e);
+        
+        //Q3
+        String[] f = {"S"};
+        quicksortmid(f);
+        assert isSorted(f);
+        show(f);
     }
     
     public static<T extends Comparable<T>> void quicksortmid(Comparable[] a) {
@@ -36,6 +54,7 @@ public class FeigalSorting {
     	int st = 0;
     	int en = a.length-1;
     	int mid = (st+en)/2;
+    	
     	//GET VALUES TO USE FOR COMPARISONS
     	T start = (T) a[st];
     	T middle =(T) a[mid];
@@ -70,47 +89,65 @@ public class FeigalSorting {
     	Sorting.quickSort(a);
 
     }
-    @SuppressWarnings("rawtypes")
+
+
 	public static Comparable[] mergesort(Comparable[] a) {
 		//VARIABLES AND DECLARATIONS
-    	int st = 0;
     	int en = a.length-1;
-    	    
-    	//HANDLE ARRAYS LARGER THAN TWO ELEMENTS
-    	if (a.length > 2)
-		{
-    		//SET MID VALUE
-			int mid = (st + en) / 2;
-			
-			//GENERATE LEFT SIDE DECOMP
-			Comparable[] left = Arrays.copyOfRange(a,st,mid);
-			mergesort(left);
-			
-			//GENERATE RIGHT SIDE DECOMP
-			Comparable[] right = Arrays.copyOfRange(a,mid+1,en);
-			mergesort(right);
+		    	
+    	//HANDLE BASE CASE OF SINGLE ELEMENT 
+    	if (a.length < 2)
+    		return a;
+    	
+		//SET MID VALUE
+		int mid = en / 2;
+		
+		//CREATE NEW PARTITION ARRAYS
+		Comparable[] left = new Comparable[mid];
+		Comparable[] right = new Comparable[en-mid+1];
 
-			//MERGE THE LEFT AND RIGHT SIDES
-			merge(left, right);
-		}
     	//HANLDES ARRAYS OF JUST TWO ELEMENTS
     	if (a.length == 2) {
     		//GENERATE THE LEFT SIDE DECOMP FROM THE VALUE IN THE [0] INDEX
-			Comparable[] left = new Comparable[1];
+			left = new Comparable[1];
 			left[0] = a[0];
-			mergesort(left);
 			
 			//GENERATE THE RIGHT SIDE DECOMP FROM THE VALUE IN THE [1] INDEX
-			Comparable[] right = new Comparable[1];
+			right = new Comparable[1];
 			right[0] = a[1];
-			mergesort(right);
 			
-			//MERGE THE TWO VALUES BACK TOGETHER
-			merge(left, right);
+			mergesort(left);
+			mergesort(right);			
+			return merge(left,right);
+			
     	}
-    	return a;
+    	
+    	//HANDLE ARRAYS LARGER THAN TWO ELEMENTS
+    	//if (a.length > 2)
+		//{
+			
+			//GENERATE LEFT SIDE DECOMP
+			//Comparable[] left = Arrays.copyOfRange(a,st,mid);
+			
+
+			for (int i = 0; i < mid; i++)
+				left[i] = a[i];
+			
+			//GENERATE RIGHT SIDE DECOMP
+			//Comparable[] right = Arrays.copyOfRange(a,mid+1,en);
+			
+
+			for (int i = mid; i <= en; i++)
+				right[i-mid] = a[i];
+
+		//}
+    	mergesort(left);
+    	mergesort(right);
+    	return merge(left,right);
+
     }
-    @SuppressWarnings("rawtypes")
+
+
 	public static Comparable[] merge(Comparable[] a, Comparable[] b) {
 		
     	Comparable[] temp = new Comparable[a.length + b.length];
