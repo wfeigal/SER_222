@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class FeigalSorting {
      
     /**
-     * Entry point for sample output.
+     * Entry point for sample output. 
      * 
      * @param args the command line arguments
      */
@@ -33,7 +33,7 @@ public class FeigalSorting {
         String[] b = {"S", "O", "R", "T", "E", "X", "A", "M", "P", "L", "E"};
         //Sorting.mergeSort(b);
         mergesort(b);
-        //assert isSorted(b);
+        assert isSorted(b);
         show(b);
         
         //Q4
@@ -90,17 +90,16 @@ public class FeigalSorting {
 
     }
 
-
-	public static Comparable[] mergesort(Comparable[] a) {
-		//VARIABLES AND DECLARATIONS
-    	int en = a.length-1;
-		    	
+   
+	public static void mergesort(Comparable[] a) {
+   	
     	//HANDLE BASE CASE OF SINGLE ELEMENT 
     	if (a.length < 2)
-    		return a;
+    		return;
     	
-		//SET MID VALUE
-		int mid = en / 2;
+		//SET MID VALUE, AND END VALUE
+    	int en = a.length-1;
+    	int mid = en / 2;
 		
 		//CREATE NEW PARTITION ARRAYS
 		Comparable[] left = new Comparable[mid];
@@ -115,40 +114,27 @@ public class FeigalSorting {
 			//GENERATE THE RIGHT SIDE DECOMP FROM THE VALUE IN THE [1] INDEX
 			right = new Comparable[1];
 			right[0] = a[1];
-			
-			mergesort(left);
-			mergesort(right);			
-			return merge(left,right);
-			
     	}
     	
     	//HANDLE ARRAYS LARGER THAN TWO ELEMENTS
-    	//if (a.length > 2)
-		//{
-			
+    	if (a.length > 2)
+		{	
 			//GENERATE LEFT SIDE DECOMP
-			//Comparable[] left = Arrays.copyOfRange(a,st,mid);
-			
-
 			for (int i = 0; i < mid; i++)
 				left[i] = a[i];
 			
 			//GENERATE RIGHT SIDE DECOMP
-			//Comparable[] right = Arrays.copyOfRange(a,mid+1,en);
-			
-
 			for (int i = mid; i <= en; i++)
 				right[i-mid] = a[i];
-
-		//}
+		}
     	mergesort(left);
     	mergesort(right);
-    	return merge(left,right);
+    	merge(left,right, a);
 
     }
 
 
-	public static Comparable[] merge(Comparable[] a, Comparable[] b) {
+	public static Comparable[] merge(Comparable[] a, Comparable[] b, Comparable[] data) {
 		
     	Comparable[] temp = new Comparable[a.length + b.length];
 		
@@ -165,12 +151,12 @@ public class FeigalSorting {
 		{
 			if (a[stA].compareTo(b[stB]) < 0)
 			{
-				temp[index] = a[stA];
+				data[index] = a[stA];
 				stA++;
 			}
 			else
 			{
-				temp[index] = b[stB];
+				data[index] = b[stB];
 				stB++;
 			}
 			index++;
@@ -179,7 +165,7 @@ public class FeigalSorting {
 		//  Copy remaining elements from first subarray, if any
 		while (stA <= enA)
 		{
-			temp[index] = a[stA];
+			data[index] = a[stA];
 			stA++;
 			index++;
 		}
@@ -187,13 +173,14 @@ public class FeigalSorting {
 		//  Copy remaining elements from second subarray, if any
 		while (stB <= enB)
 		{
-			temp[index] = b[stB];
+			data[index] = b[stB];
 			stB++;
 			index++;
 		}
 		
-		//RETURN NEW MERGED ARRAY
-		return temp;
+		//RETURN NEW MERGED ARRAY	
+		
+		return data;
     }
 
     
