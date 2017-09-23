@@ -58,7 +58,14 @@ public abstract class ArrayList<T> implements ListADT<T>, Iterable<T>
     @Override
     public T removeLast() throws EmptyCollectionException
     {
-        //TODO: Implement this.
+    	if (list.length ==0) {
+    		throw new EmptyCollectionException("No such element in list");
+    	}
+    	
+    	T temp = list[rear-1];
+    	rear -= 1;
+    	modCount -=1;
+    	return temp;
     }
 
     /**
@@ -70,7 +77,17 @@ public abstract class ArrayList<T> implements ListADT<T>, Iterable<T>
     @Override
     public T removeFirst() throws EmptyCollectionException
     {
-        //TODO: Implement this.
+    	if (list.length ==0) {
+    		throw new EmptyCollectionException("No such element in list");
+    	}
+    	T temp = list[0];
+    	for (int i = 0; i < rear; i++) {
+    		list[i] = list[i+1];
+    	}
+    	rear -= 1;
+    	modCount -= 1;
+    	return temp;
+    	
     }
 
     /**

@@ -5,8 +5,7 @@ package Week6_Unit10;
  * @author Lewis and Chase
  * @version 4.0
  */
-public class ArrayUnorderedList<T> extends ArrayList<T> 
-         implements UnorderedListADT<T>
+public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedListADT<T>
 {
     /**
      * Creates an empty list using the default capacity.
@@ -34,7 +33,14 @@ public class ArrayUnorderedList<T> extends ArrayList<T>
     @Override
     public void addToFront(T element)
     {
-        // TODO: Implement this.
+    	//SHIFT ALL ELEMENTS UP IN THE ARRAY
+        for (int i = list.length ; i > 0; i--) {
+        	list[i] = list[i-1];
+        }
+        //SET NEW ELEMENT AT THE FRONT OF THE LIST AND MAINTAIN COUNTERS
+        list[0] = element;
+        rear += 1;
+        modCount += 1;
     }
 
     /**
@@ -45,7 +51,10 @@ public class ArrayUnorderedList<T> extends ArrayList<T>
     @Override
     public void addToRear(T element)
     {
-        // TODO: Implement this.
+    	//SET NEW ELEMENT AT THE END OF THE LIST AND MAINTAIN COUNTERS
+        list[list.length] = element;
+        rear += 1;
+        modCount += 1;
     }
 
     /**

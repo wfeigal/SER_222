@@ -39,8 +39,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
      * @param left the left subtree of this tree
      * @param right the right subtree of this tree
      */
-    public LinkedBinaryTree(T element, LinkedBinaryTree<T> left, 
-                            LinkedBinaryTree<T> right) 
+    public LinkedBinaryTree(T element, LinkedBinaryTree<T> left, LinkedBinaryTree<T> right) 
     {
         root = new BinaryTreeNode<>(element);
         root.setLeft(left.root);
@@ -56,7 +55,10 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
     @Override
     public T getRootElement() throws EmptyCollectionException
     {
-        // TODO: Implement this.
+        if (root == null) {
+        	throw new EmptyCollectionException("No such element in the tree");
+        }
+        return root.element;
     }
     
     /**
@@ -67,17 +69,23 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
      */
     protected BinaryTreeNode<T> getRootNode() throws EmptyCollectionException
     {
-        // TODO: Implement this.
+        if (root == null) {
+        	throw new EmptyCollectionException("No such element in the tree");
+        }
+        return root;
     }
     
     /**
      * Returns the left subtree of the root of this tree.
      *
-     * @return a link to the left subtree fo the tree
+     * @return a link to the left subtree for the tree
      */
     public LinkedBinaryTree<T> getLeft()
     {
-        // TODO: Implement this.
+    	BinaryTreeNode<T> tempNode = root.left;
+    	LinkedBinaryTree<T> tempTree = new LinkedBinaryTree(tempNode.getElement());
+    	
+    	return tempTree;
     }
     
     /**
@@ -87,7 +95,10 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
      */
     public LinkedBinaryTree<T> getRight()
     {
-        // TODO: Implement this.
+    	BinaryTreeNode<T> tempNode = root.right;
+    	LinkedBinaryTree<T> tempTree = new LinkedBinaryTree(tempNode.getElement());
+    	
+    	return tempTree;
     }
     
     /**
@@ -109,7 +120,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
     @Override
     public int size() 
     {
-        // TODO: Implement this.
+        return this.size();
     }
     
     /**
