@@ -82,8 +82,9 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
      */
     public LinkedBinaryTree<T> getLeft()
     {
+    	//CREATE NEW TREE STARTING WITH LEFT CHILD OF THE ROOT
     	BinaryTreeNode<T> tempNode = root.left;
-    	LinkedBinaryTree<T> tempTree = new LinkedBinaryTree(tempNode.getElement());
+    	LinkedBinaryTree<T> tempTree = new LinkedBinaryTree(tempNode);
     	
     	return tempTree;
     }
@@ -95,8 +96,9 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
      */
     public LinkedBinaryTree<T> getRight()
     {
+    	//CREATE NEW TREE STARTING WITH RIGHT CHILD OF THE ROOT
     	BinaryTreeNode<T> tempNode = root.right;
-    	LinkedBinaryTree<T> tempTree = new LinkedBinaryTree(tempNode.getElement());
+    	LinkedBinaryTree<T> tempTree = new LinkedBinaryTree(tempNode);
     	
     	return tempTree;
     }
@@ -130,7 +132,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
      */
      public int getHeight()
     {
-        // TODO: Implement this.
+       return height(root);
     }
     
     /**
@@ -141,7 +143,18 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
      */
     private int height(BinaryTreeNode<T> node) 
     {
-        // TODO: Implement this.
+    	int rHeight = 0, lHeight = 0;
+    	
+    	//CAPTURE BASE CASE WHEN THE ELEMENT PASSED IN IS NULL
+        if (root == null) {
+        	return -1;
+        }
+       
+        //CAPTURE HEIGHTS OF LEFT AND RIGHT SUB TREES
+        rHeight = height(node.right);
+        lHeight = height(node.left);
+ 
+        return (Math.max(rHeight, lHeight)+1);
     }
     
     /**
@@ -154,7 +167,13 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
     @Override
     public boolean contains(T targetElement) 
     {
-        // TODO: Implement this.
+		try {
+			find(targetElement);
+		}
+		catch(ElementNotFoundException e){
+			return false;
+		}
+		return true;   
     }
     
     /**
@@ -183,8 +202,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
      * @param targetElement the element being sought in this tree
      * @param next the element to begin searching from
      */
-    private BinaryTreeNode<T> findNode(T targetElement, 
-                                        BinaryTreeNode<T> next)
+    private BinaryTreeNode<T> findNode(T targetElement, BinaryTreeNode<T> next)
     {
         if (next == null)
             return null;
@@ -210,7 +228,14 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
     @Override
     public String toString() 
     {
-        // TODO: Implement this.
+        String outStr = "";
+        Iterator iter = iterator();
+        
+        while (iter.hasNext()) {
+        	outStr += iter.next().toString() + " ";
+        	
+        }
+        return outStr;
     }
 
     /**
@@ -247,8 +272,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
      * @param node the node to be used as the root for this traversal
      * @param tempList the temporary list for use in this traversal
      */
-    protected void inOrder(BinaryTreeNode<T> node, 
-                           ArrayUnorderedList<T> tempList) 
+    protected void inOrder(BinaryTreeNode<T> node, ArrayUnorderedList<T> tempList) 
     {
         if (node != null)
         {
@@ -268,7 +292,10 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
     @Override
     public Iterator<T> iteratorPreOrder() 
     {
-        //TODO: Implement this.
+        ArrayUnorderedList<T> tempList = new ArrayUnorderedList<>();
+        preOrder(root, tempList);
+        
+        return new TreeIterator(tempList.iterator());
     }
 
     /**
@@ -277,10 +304,14 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>
      * @param node the node to be used as the root for this traversal
      * @param tempList the temporary list for use in this traversal
      */
-    protected void preOrder(BinaryTreeNode<T> node, 
-                            ArrayUnorderedList<T> tempList) 
+    protected void preOrder(BinaryTreeNode<T> node, ArrayUnorderedList<T> tempList) 
     {
-        //TODO: Implement this.
+        if (node != null)
+        {
+        	tempList.addToRear(node.getElement());
+        	preOrder(node.getLeft(), tempList);
+            preOrder(node.getRight(), tempList);
+        }
     }
 
     /**

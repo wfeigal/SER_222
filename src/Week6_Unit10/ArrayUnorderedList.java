@@ -52,7 +52,7 @@ public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedList
     public void addToRear(T element)
     {
     	//SET NEW ELEMENT AT THE END OF THE LIST AND MAINTAIN COUNTERS
-        list[list.length] = element;
+        list[rear] = element;
         rear += 1;
         modCount += 1;
     }

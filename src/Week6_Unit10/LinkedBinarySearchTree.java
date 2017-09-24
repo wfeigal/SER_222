@@ -7,8 +7,7 @@ package Week6_Unit10;
  * @author Lewis and Chase
  * @version 4.0
  */
-public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T>
-                                        implements BinarySearchTreeADT<T>
+public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements BinarySearchTreeADT<T>
 {
     /**
      * Creates an empty binary search tree.
@@ -243,8 +242,7 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T>
      * @throws ElementNotFoundException if the target element is not found
      */
     @Override
-    public void removeAllOccurrences(T targetElement)
-                   throws ElementNotFoundException 
+    public void removeAllOccurrences(T targetElement) throws ElementNotFoundException 
     {
         removeElement(targetElement);
         
@@ -300,83 +298,21 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T>
         return result;
     }
 
-    /**
-     * Removes the node with the highest value from the binary
-     * search tree and returns a reference to its element.  Throws an
-     * EmptyCollectionException if this tree is empty. 
-     *
-     * @return a reference to the node with the highest value
-     * @throws EmptyCollectionException if the tree is empty
-     */
-    @Override
-    public T removeMax() throws EmptyCollectionException 
-    {
-        // TODO: May need to implement.
-    }
+	@Override
+	public T removeMax() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    /**
-     * Returns the element with the least value in the binary search
-     * tree. It does not remove the node from the binary search tree. 
-     * Throws an EmptyCollectionException if this tree is empty.
-     *
-     * @return the element with the least value
-     * @throws EmptyCollectionException if the tree is empty
-     */
-    @Override
-    public T findMin() throws EmptyCollectionException 
-    {
-        // TODO: May need to implement.
-    }
+	@Override
+	public T findMin() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    /**
-     * Returns the element with the highest value in the binary
-     * search tree.  It does not remove the node from the binary
-     * search tree.  Throws an EmptyCollectionException if this 
-     * tree is empty.
-     *
-     * @return the element with the highest value
-     * @throws EmptyCollectionException if the tree is empty
-     */
-    @Override
-    public T findMax() throws EmptyCollectionException 
-    {
-        // TODO: May need to implement.
-    }
-
-    // TODO: Implement find.
-    // TODO: Implement contains.
-    
-    /**
-     * Returns the left subtree of the root of this tree.
-     *
-     * @return a link to the left subtree fo the tree
-     */
-    @Override
-    public LinkedBinarySearchTree<T> getLeft()
-    { 
-        // TODO: May need to implement.
-    }
-    
-    /**
-     * Returns the right subtree of the root of this tree.
-     *
-     * @return a link to the right subtree of the tree
-     */
-    @Override
-    public LinkedBinarySearchTree<T> getRight()
-    {
-        // TODO: May need to implement.
-    }
-    
-    /**
-     * Returns a reference to the specified target element if it is
-     * found in this tree.  
-     *
-     * @param targetElement the element being sought in the tree
-     * @param next the tree node to begin searching on
-     */
-    private BinaryTreeNode<T> findNode(T targetElement, BinaryTreeNode<T> next) 
-    {
-        // TODO: May need to implement.
-    }
+	@Override
+	public T findMax() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
