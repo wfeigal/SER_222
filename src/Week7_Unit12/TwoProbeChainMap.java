@@ -3,48 +3,109 @@ package Week7_Unit12;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class TwoProbeChainMap<Key,Value> implements Map{
 
+public class TwoProbeChainMap<Key,Value> implements Map<Key,Value>{
+    
+	private class Entry {
+        public Key key;
+        public Value value;
+        public Entry (Key k, Value v) {
+            key = k;
+            value = v;
+        }
+    }
+    
+    private int N; // number of key-value pairs
+    private int M; // hash table size
+    
+    private LinkedList<Entry>[] entries;
+    
+    //CONSTRUCTORS
+    public TwoProbeChainMap() {
+    	this(997);
+    }
+    
+    public TwoProbeChainMap(int M) {
+        this.N = 0;
+        this.M = M;
+        entries = new LinkedList[M];
+        for (int i = 0; i < M; i++)
+            entries[i] = new LinkedList<>();
+    }
+    
+    private int hash(Key key) {
+    	int h1 = (key.hashCode() & 0x7fffffff) % M;
+    	int h2 = (((key.hashCode() & 0x7fffffff) % M) * 31) % M;
+    	
+    	return  Math.min(h1,h2);
+    }
+    
+    
 	@Override
-	public void put(Object key, Object val) {
-		// TODO Auto-generated method stub
+	public void put(Key key, Value val) {
+		boolean added = false;
+
+        for(Entry entry : entries[hash(key)])
+            if(key.hashCode() == entry.key.hashCode()) {
+                entry.value = val;
+                added = true;
+            }
+        
+        if(!added) {
+             entries[hash(key)].add(new Entry(key, val));
+             N++;
+        }
 		
 	}
 
 	@Override
-	public Object get(Object key) {
-		// TODO Auto-generated method stub
-		return null;
+	public Value get(Key key) {
+        
+        for(Entry entry : entries[hash(key)])
+            if(key.hashCode() == entry.key.hashCode())
+                return entry.value;
+                
+        return null;
 	}
 
 	@Override
-	public void remove(Object key) {
-		// TODO Auto-generated method stub
-		
-	}
+    public int size() {
+        return N;
+    }
+    
+    @Override
+    public boolean isEmpty() {
+        return N == 0;
+    }
+    
+    
+    @Override
+    public void remove(Key key) {
+        if(contains(key)) {
+            Entry target = null;
+            for(Entry e : entries[hash(key)])
+                if(e.key == key)
+                    target = e;
+            
+            entries[hash(key)].remove(target);
+            N--;
+        }
+    }
+    
+    @Override
+    public Iterable<Key> keys() {        
+        Queue<Key> queue = new LinkedList<>();
+        
+        for (int i = 0; i < M; i++)
+            for(Entry e : entries[i])
+                    queue.add(e.key);
+        
+        return queue;
+    }
 
 	@Override
-	public boolean contains(Object key) {
+	public boolean contains(Key key) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Iterable keys() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

@@ -53,7 +53,7 @@ public class Driver {
         m.put("AAAA", 7);
         m.put("A", 1);
         
-        assert(!m.isEmpty())           : "symbol table is empty after inserting elemetns";
+        assert(!m.isEmpty())           : "symbol table is empty after inserting elements";
         assert(m.size() == 10)         : "does not contain correct number of elements";
         assert(m.contains("112323"))  : "added key -42341145 does not exist";
         assert(m.contains("a"))          : "added key 0 does not exist" ;
