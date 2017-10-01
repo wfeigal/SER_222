@@ -46,7 +46,7 @@ public class TwoProbeChainMap<Key,Value> implements Map<Key,Value>{
 		//VARIABLES AND DECLARATIONS
 		boolean added = false;
         int h1 = hash(key);
-        int h2 = hash2(key);
+        int h2 = hash2(key); 
         //CHECK FIRST HASH 
         for(Entry entry : entries[h1])
             if(key.hashCode() == entry.key.hashCode()) {
