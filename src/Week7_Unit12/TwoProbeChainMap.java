@@ -34,37 +34,60 @@ public class TwoProbeChainMap<Key,Value> implements Map<Key,Value>{
     }
     
     private int hash(Key key) {
-    	int h1 = (key.hashCode() & 0x7fffffff) % M;
-    	int h2 = (((key.hashCode() & 0x7fffffff) % M) * 31) % M;
-    	
-    	return  Math.min(h1,h2);
+    	return (key.hashCode() & 0x7fffffff) % M;
     }
     
+    private int hash2(Key key) {
+    	return (((key.hashCode() & 0x7fffffff) % M) * 31) % M;
+    }
     
 	@Override
 	public void put(Key key, Value val) {
+		//VARIABLES AND DECLARATIONS
 		boolean added = false;
-
-        for(Entry entry : entries[hash(key)])
+        int h1 = hash(key);
+        int h2 = hash2(key);
+        //CHECK FIRST HASH 
+        for(Entry entry : entries[h1])
+            if(key.hashCode() == entry.key.hashCode()) {
+                entry.value = val;
+                added = true;
+            }
+        //CHECK SECOND HASH
+        for(Entry entry : entries[h2])
             if(key.hashCode() == entry.key.hashCode()) {
                 entry.value = val;
                 added = true;
             }
         
         if(!added) {
-             entries[hash(key)].add(new Entry(key, val));
-             N++;
+        	int ind = 0;
+        	//CHECK FOR SMALLEST LIST
+        	if (entries[h1].size() <= entries[h2].size())
+        		ind = h1;
+        	if (entries[h2].size() <= entries[h1].size())
+    			ind = h2;
+        	//ADD VALUES INTO SMALLER OF LISTS
+            entries[ind].add(new Entry(key, val));
+            N++;
         }
 		
 	}
 
 	@Override
 	public Value get(Key key) {
-        
-        for(Entry entry : entries[hash(key)])
+        //VARIABLES AND DECLARATIONS
+		int h1 = hash(key);
+        int h2 = hash2(key);
+		//CHECK FIRST HASH
+        for(Entry entry : entries[h1])
             if(key.hashCode() == entry.key.hashCode())
                 return entry.value;
-                
+        //CHECK SECOND HASH
+        for(Entry entry : entries[h2])
+            if(key.hashCode() == entry.key.hashCode())
+                return entry.value;
+        //RETURN NULL IF NOT FOUND    
         return null;
 	}
 
@@ -81,13 +104,31 @@ public class TwoProbeChainMap<Key,Value> implements Map<Key,Value>{
     
     @Override
     public void remove(Key key) {
-        if(contains(key)) {
+        //VARIABLES AND DECLARATIONS 
+    	boolean found = false;
+    	int h1 = hash(key);
+        int h2 = hash2(key);
+    	int ind = 0;
+        
+    	if(contains(key)) {
             Entry target = null;
-            for(Entry e : entries[hash(key)])
-                if(e.key == key)
-                    target = e;
-            
-            entries[hash(key)].remove(target);
+            //CHECK FIRST HASH
+            for(Entry e : entries[h1])
+                if(e.key == key) {
+                	 target = e;
+                	 ind = h1;
+                	 found = true;
+                }
+            if (!found) {
+            	//CHECK SECOND HASH 
+                for(Entry e : entries[h2])
+                    if(e.key == key) {
+                    	 target = e;
+                    	 ind = h2;
+                    }
+            }
+            //REMOVE VALUE FROM LOCATION FOUND
+            entries[ind].remove(target);
             N--;
         }
     }
@@ -105,7 +146,21 @@ public class TwoProbeChainMap<Key,Value> implements Map<Key,Value>{
 
 	@Override
 	public boolean contains(Key key) {
-		// TODO Auto-generated method stub
-		return false;
+        //VARIABLES AND DECLARATIONS
+		boolean contains = false;
+		int h1 = hash(key);
+        int h2 = hash2(key);
+        
+		//CHECK FIRST HASH
+        for(Entry entry : entries[h1])
+            if(key.hashCode() == entry.key.hashCode())
+                contains = true;
+        
+        //CHECK SECOND HASH
+        for(Entry entry : entries[h2])
+            if(key.hashCode() == entry.key.hashCode())
+                contains = true;
+    
+        return contains;
 	}
 }
