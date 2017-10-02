@@ -31,7 +31,7 @@ public class LinearProbingMap<Key,Value> implements Map<Key,Value>{
         this.M = M;
         entries = new Entry[M];
     }
-    
+    //METHODS
     private int hash(Key k, int i) {
     	return ((k.hashCode() & 0x7fffffff) + i) % M;
     }
@@ -43,9 +43,9 @@ public class LinearProbingMap<Key,Value> implements Map<Key,Value>{
         int i = 1;
         
         Entry current = entries[ind];
-        
+        //CHECK FOR THE KEY IN THE COLLECTION
         while (current != null) {
-        	
+        	//
         	if (current.key.hashCode() == key.hashCode()) {
         		current.value = val;
         		added = true;
@@ -54,7 +54,7 @@ public class LinearProbingMap<Key,Value> implements Map<Key,Value>{
         	ind = hash(key,i);
         	current = entries[ind];
         }
-        
+        //UPDATE LIST IF KEY DOES NOT ALREADY EXIST
         if(!added) {
              entries[ind] = new Entry(key, val);
              N++;
@@ -68,10 +68,10 @@ public class LinearProbingMap<Key,Value> implements Map<Key,Value>{
 		Entry<Key,Value> result = entries[hash(key,ind)];
 		
 		if (result != null) {
-			
+			//CHECK FOR KEY AT HASHED INDEX
 			if (result.key.hashCode() == key.hashCode())
 				return result.value;
-			
+			//CHECK SUBSEQUENT INDEXES TO ACCOUNT FOR LINEAR PROBE
 			while (result.key.hashCode() != key.hashCode()) {
 				int temp = hash(key,ind);
 				result = entries[temp];
@@ -107,9 +107,11 @@ public class LinearProbingMap<Key,Value> implements Map<Key,Value>{
         int ind = 0;
         
         if (result != null) {
+        	//CHECK FOR ELEMENT AT ORIGINAL HASH VALUE
             if (result.key.hashCode() == key.hashCode()) {
                 return true;
             }
+            //CHECK FOR KEY AT SUBSEQUENT INDEXES TO ACCOUNT FOR LINEAR PROBE
             while (result.key.hashCode() != key.hashCode()){
                 int temp = hash(key, ind);
                 result = entries[temp];
